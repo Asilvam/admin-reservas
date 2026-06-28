@@ -70,6 +70,13 @@ function dateInputFromChileDateTime(startTimeChile: string) {
   return `${year}-${month}-${day}`;
 }
 
+function dateFromChileDateTime(startTimeChile: string) {
+  const [datePart, timePart = '00:00:00'] = startTimeChile.split(' ');
+  const [day, month, year] = datePart.split('-').map(Number);
+  const [hour, minute, second] = timePart.split(':').map(Number);
+  return new Date(year, month - 1, day, hour || 0, minute || 0, second || 0);
+}
+
 function chooseDefaultDate(schedules: ScheduleReservationsGroup[], preferredDate: string) {
   if (schedules.some((schedule) => matchesDate(schedule.startTimeChile, preferredDate))) {
     return preferredDate;
@@ -125,6 +132,7 @@ export function ReservationsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isExporting, setIsExporting] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [currentTime, setCurrentTime] = useState(() => new Date());
   const [error, setError] = useState('');
 
   const loadFreshSchedules = async (adjustDefaultDate = false, showRefreshIndicator = false) => {
@@ -175,6 +183,11 @@ export function ReservationsPage() {
     return () => window.clearInterval(intervalId);
   }, [eventType, filters.date]);
 
+  useEffect(() => {
+    const intervalId = window.setInterval(() => setCurrentTime(new Date()), 30_000);
+    return () => window.clearInterval(intervalId);
+  }, []);
+
   const handleEventTypeChange = (nextEventType: AdminEventType) => {
     saveEventType(nextEventType);
     setEventType(nextEventType);
@@ -201,6 +214,13 @@ export function ReservationsPage() {
   const filteredSchedules = useMemo(() => {
     return schedules.filter((schedule) => matchesDate(schedule.startTimeChile, filters.date));
   }, [filters.date, schedules]);
+
+  const canExportSelectedDate = useMemo(() => {
+    return (
+      filteredSchedules.length > 0 &&
+      filteredSchedules.every((schedule) => dateFromChileDateTime(schedule.startTimeChile).getTime() <= currentTime.getTime())
+    );
+  }, [currentTime, filteredSchedules]);
 
   const selectedSchedule = useMemo(() => {
     return filteredSchedules.find((schedule) => schedule.scheduleId === selectedScheduleId) ?? filteredSchedules[0] ?? null;
@@ -318,7 +338,8 @@ export function ReservationsPage() {
           </label>
           <button
             type="button"
-            disabled={isExporting || !filters.date}
+            disabled={isExporting || !filters.date || !canExportSelectedDate}
+            title={canExportSelectedDate ? 'Descargar reservas de la fecha' : 'Disponible cuando todos los horarios de la fecha hayan concluido'}
             onClick={downloadDateReservations}
           >
             {isExporting ? 'Descargando...' : 'Descargar fecha'}

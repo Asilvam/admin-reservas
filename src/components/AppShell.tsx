@@ -1,7 +1,9 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export function AppShell() {
   const navigate = useNavigate();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   const logout = () => {
     localStorage.removeItem('adminToken');
@@ -9,9 +11,20 @@ export function AppShell() {
   };
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${isSidebarCollapsed ? 'is-sidebar-collapsed' : ''}`}>
       <aside className="sidebar">
-        <div>
+        <button
+          className="sidebar-toggle"
+          type="button"
+          aria-label={isSidebarCollapsed ? 'Abrir menu lateral' : 'Recoger menu lateral'}
+          aria-expanded={!isSidebarCollapsed}
+          onClick={() => setIsSidebarCollapsed((current) => !current)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <div className="sidebar-brand">
           <p className="eyebrow">Admin</p>
           <h1>Reservas</h1>
         </div>
