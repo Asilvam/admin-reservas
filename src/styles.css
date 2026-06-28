@@ -331,13 +331,19 @@ label {
 
 .filters-bar {
   display: grid;
-  grid-template-columns: minmax(240px, 2fr) repeat(3, minmax(150px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   align-items: end;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 16px;
   background: var(--surface);
+}
+
+.filters-bar > label,
+.filters-bar input,
+.filters-bar select {
+  max-width: 100%;
 }
 
 .table-wrap {
@@ -638,10 +644,6 @@ td {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .filters-bar {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .schedule-layout {
     grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
   }
@@ -682,10 +684,6 @@ td {
   .schedule-layout {
     grid-template-columns: minmax(200px, 250px) minmax(0, 1fr);
     gap: 12px;
-  }
-
-  .filters-bar {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .schedule-list,
@@ -772,8 +770,7 @@ td {
     margin-top: 0;
   }
 
-  .metrics-grid,
-  .filters-bar {
+  .metrics-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
