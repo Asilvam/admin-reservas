@@ -639,7 +639,7 @@ td {
   }
 
   .filters-bar {
-    grid-template-columns: minmax(320px, 1fr) 160px 160px 160px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .schedule-layout {
@@ -685,7 +685,7 @@ td {
   }
 
   .filters-bar {
-    grid-template-columns: minmax(300px, 1fr) 140px 140px 140px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .schedule-list,
@@ -775,10 +775,6 @@ td {
   .metrics-grid,
   .filters-bar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .filters-bar label:first-child {
-    grid-column: 1 / -1;
   }
 
   .schedule-layout {
