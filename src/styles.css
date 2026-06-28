@@ -770,6 +770,10 @@ td {
   .schedule-list {
     max-height: none;
   }
+
+  .schedule-detail {
+    max-height: none;
+  }
 }
 
 @media (max-width: 640px) {
