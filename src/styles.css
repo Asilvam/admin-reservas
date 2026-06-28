@@ -602,6 +602,52 @@ td {
   background: #fee2e2;
 }
 
+@media (max-width: 1366px) {
+  .schedule-layout {
+    grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  }
+
+  .schedule-detail-header {
+    display: grid;
+    justify-content: stretch;
+  }
+
+  .schedule-detail-header h3 {
+    font-size: 1.85rem;
+  }
+
+  .schedule-badges {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 1180px) {
+  .main-panel {
+    padding: 24px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filters-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .schedule-layout {
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  }
+
+  .schedule-list {
+    max-height: calc(100vh - 360px);
+  }
+
+}
+
 @media (max-width: 920px) {
   .app-shell {
     grid-template-columns: 1fr;
