@@ -346,6 +346,12 @@ label {
   max-width: 100%;
 }
 
+.filters-bar input[type="date"] {
+  min-width: 0;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
 .table-wrap {
   overflow: auto;
   border: 1px solid var(--line);
